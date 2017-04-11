@@ -49,7 +49,7 @@ class MainPage(Handler):            #renders main page upon initial get request
                             "ORDER BY created DESC ")
     #retrieves entity and assigns to "posts"
 
-        self.render("front.html", title=title, post_body=post_body, error=error)
+        self.render("front.html", title=title, post_body=post_body, error=error, posts=posts)
         #renders front page using .render, info from 'posts' and front template
 
     def get(self):

@@ -36,12 +36,15 @@
     hr {
       margin: 20px auto;
     }
-    .art + .art {
+    .post + .post {
       margin-top: 20px;
     }
-    .art-title {
+    .post-title {
       font-weight: bold;
       font-size: 17px;
+    }
+    .post-body {
+        border: 2px solid black
     }
   </style>
 
@@ -61,15 +64,15 @@
 
       <div class="error">{{error}}</div>
 
-      <input type="submit">
+      <input type="submit" action='/'>
     </form>
 
     <hr>
 
-    {% for art in arts %}
-      <div class="art">
-        <div class="art-title">{{art.title}}</div>
-        <pre class="art-body">{{art.art}}</pre>
+    {% for post in posts %}
+      <div class="post">
+        <div class="post-title">{{post.title}}</div>
+        <pre class="post-body">{{post.post_body}}</pre>
       </div>
     {% endfor %}
 
