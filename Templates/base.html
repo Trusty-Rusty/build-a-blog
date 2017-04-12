@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Maniacal Musings</title>
+        <style type="text/css">
+          body {
+            font-family:sans-serif;
+            width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+          }
+          .error {
+            color: red
+          }
+          label {
+            display: block;
+            font-size: 20px;
+          }
+          input[type=text] {
+            width: 400px;
+            font-size: 20px;
+            padding: 2px;
+          }
+          textarea {
+            width: 400px;
+            height: 200px;
+            font-size: 17px;
+            font-family: monospace;
+          }
+          input[type=submit] {
+            font-size: 24px;
+          }
+          hr {
+            margin: 20px auto;
+          }
+          .post + .post {
+            margin-top: 20px;
+          }
+          .post-title {
+            font-weight: bold;
+            font-size: 17px;
+          }
+          .post-body {
+              border: 2px soliblack
+          }
+        </style>
+    </head>
+    <body>
+        <h1>
+            <a href="/">Maniacal Musings Blog</a>
+        </h1>
+        <h3>Medieval Thoughts For A Modern World</h3>
+
+        {% block content %}
+        {% endblock %}
+
+        <h5>Any thoughts or ideas found herein are those of the author and should be immediately adopted by you.</h5>
+
+    </body>
+</html>

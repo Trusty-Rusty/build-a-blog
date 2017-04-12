@@ -74,5 +74,17 @@ class MainPage(Handler):            #renders main page upon initial get request
             self.render_front(title, post_body, error)
         #if both not present then rerender the page with input & error message
 
-app = webapp2.WSGIApplication([('/', MainPage)
-], debug=True)
+class RecentPosts(Handler):
+#takes /blog requests
+
+    def render_recent(self, posts):
+        posts = db.GqlQuery("SELECT * FROM Post "
+                            "ORDER BY created DESC "
+                            "LIMIT 5")
+        self.render("")
+    #renders page with 5 newest blogs
+
+app = webapp2.WSGIApplication([
+    ('/', MainPage),
+    ('/blog', RecentPosts)
+    ], debug=True)
