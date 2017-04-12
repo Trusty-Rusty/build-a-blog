@@ -94,6 +94,6 @@ class ViewSinglePost(Handler):
 
 app = webapp2.WSGIApplication([
     ('/', MainBlog),
-    ('/create-new', CreateNewPost),
+    ('/newpost', CreateNewPost),
     ('/view-post ', ViewSinglePost)
     ], debug=True)
