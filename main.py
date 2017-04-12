@@ -43,14 +43,14 @@ class Post(db.Model):
     post_body = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)  #Print this with posts?
 
-class MainPage(Handler):            #renders main page upon initial get request
+class CreateNewPost(Handler):    #renders post creation page
     def render_front(self, title="", post_body="", error=""):
         posts = db.GqlQuery("SELECT * FROM Post "
                             "ORDER BY created DESC ")
     #retrieves entity and assigns to "posts"
 
-        self.render("front.html", title=title, post_body=post_body, error=error, posts=posts)
-        #renders front page using .render, info from 'posts' and front template
+        self.render("post-creation.html", title=title, post_body=post_body, error=error, posts=posts)
+        #renders post-creation page using .render, info from 'posts' and template
 
     def get(self):
         self.render_front()
@@ -74,17 +74,26 @@ class MainPage(Handler):            #renders main page upon initial get request
             self.render_front(title, post_body, error)
         #if both not present then rerender the page with input & error message
 
-class RecentPosts(Handler):
+class MainBlog(Handler):
 #takes /blog requests
 
-    def render_recent(self, posts):
+    def get(self):
+        title = self.request.get("title")
+        post_body = self.request.get("post_body")
         posts = db.GqlQuery("SELECT * FROM Post "
                             "ORDER BY created DESC "
                             "LIMIT 5")
-        self.render("")
+
+        self.render("main-blog.html", title = title, post_body = post_body, posts = posts)
     #renders page with 5 newest blogs
 
+class ViewSinglePost(Handler):
+    """This page displays a single blog post when the link is clicked
+    or a new post is created"""
+    #def get(self, posts): #unfinished
+
 app = webapp2.WSGIApplication([
-    ('/', MainPage),
-    ('/blog', RecentPosts)
+    ('/', MainBlog),
+    ('/create-new', CreateNewPost),
+    ('/view-post ', ViewSinglePost)
     ], debug=True)
