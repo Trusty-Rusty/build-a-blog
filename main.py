@@ -65,8 +65,8 @@ class CreateNewPost(Handler):    #renders post creation page
             a = Post(title = title, post_body = post_body)
             a.put()
         #if title and post_body are present, update db
-
-            self.redirect("/")
+            post_url = str(a.key().id())
+            self.redirect('/blog/' + post_url)
         #rerender the page
 
         else:
@@ -83,17 +83,20 @@ class MainBlog(Handler):
         posts = db.GqlQuery("SELECT * FROM Post "
                             "ORDER BY created DESC "
                             "LIMIT 5")
-
         self.render("main-blog.html", title = title, post_body = post_body, posts = posts)
     #renders page with 5 newest blogs
 
-class ViewSinglePost(Handler):
-    """This page displays a single blog post when the link is clicked
+class ViewPostHandler(Handler):
+    """Uses webapp2.route route to show a single blog post when the link is clicked
     or a new post is created"""
-    #def get(self, posts): #unfinished
+    def get(self, id):
+        posts = db.GqlQuery("SELECT * FROM Post ")
+        post_id = Post.get_by_id(int(id))
+        self.render("view-post.html", post_id = post_id)
 
 app = webapp2.WSGIApplication([
     ('/', MainBlog),
     ('/newpost', CreateNewPost),
-    ('/view-post ', ViewSinglePost)
+    ('/view-post ', ViewPostHandler),                    #Do i still need this with below?
+    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)    #permalink route
     ], debug=True)
